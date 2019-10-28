@@ -31,6 +31,7 @@
 #section {
     float:left;
     padding:10px; 
+    width:100%;
 }
 #footer {
     background-color:black;
@@ -41,9 +42,19 @@
 }
 </style>
 
+<!-- header -->
 <div id="header">
 <h1>FFmpeg Audio Filter Galaxy</h1>
 </div>
+
+<!-- introduction -->
+<div id="section">
+<h1> Introduction </h1>
+<p>Welcome to add new effects with a Merge Request, or send email to vacingfangATqq.com</p>
+<p>Note: Test on chrome only.</p>
+</div>
+
+
 
 <!-- arnndn -->
 <div id="section">
@@ -70,7 +81,7 @@
     <td>None</td>
 </tr>
 <tr>
-    <th> process </th>
+    <th> denoise output </th>
     <td>
         <audio controls="controls">
             <source src="arnndn/arnn_out.wav" type="audio/wav">
@@ -109,7 +120,7 @@
     <td>None</td>
 </tr>
 <tr>
-    <th> pitch </th>
+    <th> pitch adjust </th>
     <td>
         <audio controls="controls">
             <source src="arubberband/rubber_pitch_1.5.wav" type="audio/wav">
@@ -119,7 +130,7 @@
     <td>./ffmpeg -i ./arnn_out.wav -filter_complex "rubberband=pitch=1.5" rubber_out.wav</td>
 </tr>
 <tr>
-    <th> tempo </th>
+    <th> tempo adjust </th>
     <td>
         <audio controls="controls">
             <source src="arubberband/rubber_tempo_1.5.wav" type="audio/wav">
