@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+    <meta charset="utf-8"/>
+    <title>FFmpeg Audio Filter Galaxy</title>
+<body>
+
+<style>
+.warp{
+    style="float:right";
+    width:100%;
+    white-space:normal;
+    word-wrap:break-word;
+    word-break:break-all;
+}
+
+
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:100px;
+    float:left;
+    padding:5px; 
+}
+#section {
+    float:left;
+    padding:10px; 
+}
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px; 
+}
+</style>
+
+<div id="header">
+<h1>FFmpeg Audio Filter Galaxy</h1>
+</div>
+
+<!-- arnndn -->
+<div id="section">
+<h3> arnndn </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#arnndn"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> process </th>
+    <td>
+        <audio controls="controls">
+            <source src="arnndn/arnn_out.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td>None</td>
+    <td>./ffmpeg -i temp/noisy_speech.wav -af "arnndn=m=temp/rnnoise-models-master/marathon-prescription-2018-08-29/mp.rnnn" arnn_out.wav</td>
+</tr>
+</table>
+</div>
+
+
+
+<!-- arubberband -->
+<div id="section">
+<h3> arubberband</h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#rubberband"> FFmpeg doc </a> 
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> pitch </th>
+    <td>
+        <audio controls="controls">
+            <source src="arubberband/rubber_pitch_1.5.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td>adjust pitch only, voice change</td>
+    <td>./ffmpeg -i ./arnn_out.wav -filter_complex "rubberband=pitch=1.5" rubber_out.wav</td>
+</tr>
+<tr>
+    <th> tempo </th>
+    <td>
+        <audio controls="controls">
+            <source src="arubberband/rubber_tempo_1.5.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td>adjust tempo only, file duration change</td>
+    <td>./ffmpeg -i ./arnn_out.wav -filter_complex "rubberband=tempo=1.5" rubber_out.wav</td>
+</tr>
+</table>
+</div>
+
+
+
+
+<div id="footer">
+Copyright ? www.vacing.com
+</div>
+
+</body>
+</html>
