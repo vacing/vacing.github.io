@@ -56,6 +56,45 @@
 
 
 
+<!-- anlms -->
+<div id="section">
+<h3> anlms </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#anlms"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> denoise output </th>
+    <td>
+        <audio controls="controls">
+            <source src="anlms/anlms_denoise_out.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> Output signal's band is cutted.</td>
+    <td>./ffmpeg -i temp/noisy_speech.wav -af "asplit[a][b],[a]adelay=32S|32S[a],[b][a]anlms=order=128:leakage=0.0005:mu=.5:out_mode=o" anlms.wav</td>
+</tr>
+</table>
+</div>
+
+
+
 <!-- arnndn -->
 <div id="section">
 <h3> arnndn </h3>
