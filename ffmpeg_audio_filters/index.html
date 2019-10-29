@@ -94,6 +94,57 @@
 </div>
 
 
+
+
+<!-- aderivative/aintegral -->
+<div id="section">
+<h3> aderivative/aintegral</h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#aderivative_002c-aintegral"> FFmpeg doc </a> 
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> derivative </th>
+    <td>
+        <audio controls="controls">
+            <source src="aderivative_aintegral/aderivative_out.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> can still hear the original voice</td>
+    <td>./ffmpeg -i ./arnn_out.wav -filter_complex "aderivative" aderivative_out.wav</td>
+</tr>
+<tr>
+    <th> intergral </th>
+    <td>
+        <audio controls="controls">
+            <source src="aderivative_aintegral/aintegral_out.wav" type="audio/wav">            
+        </audio>
+    </td>
+    <td>almost can hear nothing</td>
+    <td>./ffmpeg -i ./arnn_out.wav -filter_complex "aintegral" aderivative_out.wav</td>
+</tr>
+</table>
+</div>
+
+
+
 <!-- anlms -->
 <div id="section">
 <h3> anlms </h3>
