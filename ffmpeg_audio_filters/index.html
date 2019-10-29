@@ -137,8 +137,8 @@
             <source src="aderivative_aintegral/aintegral_out.wav" type="audio/wav">            
         </audio>
     </td>
-    <td>almost can hear nothing</td>
-    <td>./ffmpeg -i ./arnn_out.wav -filter_complex "aintegral" aderivative_out.wav</td>
+    <td>can still hear the original voice</td>
+    <td>./ffmpeg -i ./arnn_out.wav -filter_complex "aintegral[a];[a]aeval=val(ch)/30:c=same" aintegral_out.wav</td>
 </tr>
 </table>
 </div>
