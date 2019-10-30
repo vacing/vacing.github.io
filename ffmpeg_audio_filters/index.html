@@ -226,6 +226,54 @@
 
 
 
+<!-- afftfilt -->
+<div id="section">
+<h3> afftfilt </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#afftfilt"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> robot effect </th>
+    <td>
+        <audio controls="controls">
+            <source src="afftfilt/fftfilt_robot_voice.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> sounds like a robot talking</td>
+    <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -filter_complex "afftfilt=real='hypot(re,im)*sin(0)':imag='hypot(re,im)*cos(0)':win_size=512:overlap=0.75" fftfilt_robot_voice.wav </td>
+</tr>
+<tr>
+    <th> whisper effect </th>
+    <td>
+        <audio controls="controls">
+            <source src="afftfilt/fftfilt_whisper_voice.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> sounds like a whisper</td>
+    <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -filter_complex "afftfilt=real='hypot(re,im)*cos((random(0)*2-1)*2*3.14)':imag='hypot(re,im)*sin((random(1)*2-1)*2*3.14)':win_size=128:overlap=0.8" fftfilt_whisper_voice.wav </td>
+</tr>
+</table>
+</div>
+
+
 <!-- anlms -->
 <div id="section">
 <h3> anlms </h3>
