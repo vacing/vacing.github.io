@@ -274,6 +274,56 @@
 </div>
 
 
+<!-- afir -->
+<div id="section">
+<h3> afir </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#afir"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> fir</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/music.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> reverb output </th>
+    <td>
+        <audio controls="controls">
+            <source src="afir/afir_out_voice.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> reverb test</td>
+    <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -i ~/audio_source/music.wav -filter_complex "[0]apad=pad_len=44100*2[2];[2][1]afir=length=1:irfmt=mono:dry=10:wet=10[3];[3]atrim=start_sample=44100*2" afir_out_voice.wav </td>
+</tr>
+</table>
+</div>
+
+
+
+
 <!-- anlms -->
 <div id="section">
 <h3> anlms </h3>
