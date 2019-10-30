@@ -95,6 +95,87 @@
 
 
 
+<!-- aecho -->
+<div id="section">
+<h3> aecho </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#aecho"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<caption> voice </caption>
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> indoor </th>
+    <td>
+        <audio controls="controls">
+            <source src="aecho/echo_indoor_out.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> indoor echo effect </td>
+    <td>./ffmpeg -i ./arnn_out.wav -filter_complex "aecho=0.8:0.9:40|50|70:0.4|0.3|0.2" echo_indoor_out.wav</td>
+</tr>
+<tr>
+    <th> mountains </th>
+    <td>
+        <audio controls="controls">
+            <source src="aecho/echo_mountains_out.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> mountains echo effect </td>
+    <td>./ffmpeg -i ./arnn_out.wav -filter_complex "aecho=0.8:0.9:500|1000:0.2|0.1" echo_mountain_out.wav </td>
+</tr>
+</table>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<caption> music </caption>
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/music.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> metal </th>
+    <td>
+        <audio controls="controls">
+            <source src="aecho/echo_metal_out.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> metal music effect </td>
+    <td>./ffmpeg -i ~/audio_source/music.wav -filter_complex "aecho=0.8:0.88:8:0.8" echo_metal_out.wav</td>
+</tr>
+</table>
+</div>
+
+
+
+
 
 <!-- aderivative/aintegral -->
 <div id="section">
