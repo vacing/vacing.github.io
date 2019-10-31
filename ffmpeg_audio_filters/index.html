@@ -323,6 +323,56 @@
 
 
 
+<!-- amultiply -->
+<div id="section">
+<h3> amultiply </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#amultiply"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin 1</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> origin 2 </th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/music.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> amultiply output </th>
+    <td>
+        <audio controls="controls">
+            <source src="amultiply/amultiply_out_voice.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> amultiply test </td>
+    <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -i ~/audio_source/music.wav -filter_complex "amultiply[a];[a]aeval=val(ch)*40:c=same" amultiply_out_voice.wav</td>
+</tr>
+</table>
+</div>
+
+
+
+
 
 <!-- anlms -->
 <div id="section">
