@@ -727,6 +727,83 @@
 
 
 
+<!-- atremolo -->
+<div id="section">
+<h3> atremolo </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#tremolo"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/music.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> tremolo output </th>
+    <td>
+        <audio controls="controls">
+            <source src="atremolo/atremolo_out_music.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> sinnusoidal amplitude modulation </td>
+    <td>./ffmpeg -i ~/audio_source/music.wav -filter_complex "tremolo=f=1:d=0.8" atremolo_out_music.wav</td>
+</tr>
+</table>
+</div>
+
+
+
+<!-- avibrato -->
+<div id="section">
+<h3> avibrato </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#vibrato"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/music.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> tremolo output </th>
+    <td>
+        <audio controls="controls">
+            <source src="avibrato/avibrato_out_music.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> sinnusoidal phase modulation </td>
+    <td>./ffmpeg -i ~/audio_source/music.wav -filter_complex "vibrato=f=4" avibrato_out_music.wav</td>
+</tr>
+</table>
+</div>
+
+
 
 <div id="footer">
 Copyright ? www.vacing.com
