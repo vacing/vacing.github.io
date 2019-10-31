@@ -134,6 +134,57 @@
 
 
 
+
+<!-- adeesser -->
+<div id="section">
+<h3> adeesser </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#deesser"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> ess output </th>
+    <td>
+        <audio controls="controls">
+            <source src="adeesser/adeesser_out_voice_ess.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> output ess sound, not deessed sound </td>
+    <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -filter_complex "deesser=i=1:s=e[a];[a]aeval=val(ch)*10:c=same" adeesser_out_voice.wav </td>
+</tr>
+<tr>
+    <th> deessed output </th>
+    <td>
+        <audio controls="controls">
+            <source src="adeesser/adeesser_out_voice.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> deessed sound </td>
+    <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -filter_complex "deesser=i=1" adeesser_out_voice.wav </td>
+</tr>
+</table>
+</div>
+
+
+
+
 <!-- aecho -->
 <div id="section">
 <h3> aecho </h3>
