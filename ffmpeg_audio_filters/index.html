@@ -175,8 +175,6 @@
 
 
 
-
-
 <!-- aderivative/aintegral -->
 <div id="section">
 <h3> aderivative/aintegral</h3>
@@ -366,6 +364,106 @@
     </td>
     <td> amultiply test </td>
     <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -i ~/audio_source/music.wav -filter_complex "amultiply[a];[a]aeval=val(ch)*40:c=same" amultiply_out_voice.wav</td>
+</tr>
+</table>
+</div>
+
+
+
+<!-- aphaser -->
+<div id="section">
+<h3> aphaser </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#aphaser"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/music.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> aphaser output </th>
+    <td>
+        <audio controls="controls">
+            <source src="aphaser/aphaser_out_music.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> back ground noise makes me feel uncomfortable</td>
+    <td>./ffmpeg -i ~/audio_source/music.wav -filter_complex "aphaser=type=t:speed=2:decay=0.6" aphaser_out_music.wav</td>
+</tr>
+</table>
+</div>
+
+
+
+<!-- apulsator -->
+<div id="section">
+<h3> apulsator </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#apulsator"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/music.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> channel shift </th>
+    <td>
+        <audio controls="controls">
+            <source src="apulsator/apulsator_out_music.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> channel shift test, panner? </td>
+    <td>./ffmpeg -i ~/audio_source/music.wav -filter_complex "apulsator=mode=sine:hz=0.5" apulsator_out_music.wav</td>
+</tr>
+
+<tr>
+    <th> origin</th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> tremolo </th>
+    <td>
+        <audio controls="controls">
+            <source src="apulsator/apulsator_out_voice.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> tremolo test, not natrual </td>
+    <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -filter_complex "apulsator=mode=sine:hz=3:width=0.1:offset_r=0" apulsator_out_voice.wav</td>
 </tr>
 </table>
 </div>
