@@ -411,6 +411,8 @@
 
 
 
+
+
 <!-- amultiply -->
 <div id="section">
 <h3> amultiply </h3>
@@ -799,6 +801,45 @@
     </td>
     <td> sinnusoidal phase modulation </td>
     <td>./ffmpeg -i ~/audio_source/music.wav -filter_complex "vibrato=f=4" avibrato_out_music.wav</td>
+</tr>
+</table>
+</div>
+
+
+
+<!-- loudnorm -->
+<div id="section">
+<h3> loudnorm </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#loudnorm"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin </th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> loudnorm output </th>
+    <td>
+        <audio controls="controls">
+            <source src="aloudnorm/aloudnorm_out_voice.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> one pass loudnorm </td>
+    <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -af loudnorm=I=-16:TP=-1.5:LRA=14 -ar 48k loudnorm_out_voice.wav</td>
 </tr>
 </table>
 </div>
