@@ -673,7 +673,7 @@
         </audio>
     </td>
     <td>None</td>
-    <td>./ffmpeg -i temp/noisy_speech.wav -af "arnndn=m=temp/rnnoise-models-master/marathon-prescription-2018-08-29/mp.rnnn" arnn_out.wav</td>
+    <td>./ffmpeg -i temp/noisy_speech.wav -af "arnndn=m=temp/mp.rnnn" arnn_out.wav</td>
 </tr>
 </table>
 </div>
@@ -840,6 +840,45 @@
     </td>
     <td> one pass loudnorm </td>
     <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -af loudnorm=I=-16:TP=-1.5:LRA=14 -ar 48k loudnorm_out_voice.wav</td>
+</tr>
+</table>
+</div>
+
+
+
+<!-- superequalizer -->
+<div id="section">
+<h3> superequalizer </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#superequalizer"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin </th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/song_vocal.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> EQ output </th>
+    <td>
+        <audio controls="controls">
+            <source src="superequalizer/eq_norm.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> rock effect, imatate QQ Music EQ </td>
+    <td>./ffmpeg -i ~/share/resource/song_vocal.wav -af "superequalizer=1b=10:2b=10:3b=1:4b=5:5b=7:6b=5:7b=2:8b=3:9b=4:10b=5:11b=6:12b=7:13b=8:14b=8:15b=9:16b=9:17b=10:18b=10[a];[a]loudnorm=I=-16:TP=-1.5:LRA=14" -ar 48k eq_norm.wav</td>
 </tr>
 </table>
 </div>
