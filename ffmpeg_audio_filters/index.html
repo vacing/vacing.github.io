@@ -846,6 +846,54 @@
 
 
 
+<!-- sofalizer -->
+<div id="section">
+<h3> sofalizer </h3>
+<p>
+<a href="https://ffmpeg.org/ffmpeg-filters.html#sofalizer"> FFmpeg doc </a>
+</p>
+
+<table border="2" style="width:1000px; margin:5px auto;float:left;" >
+<tr>
+    <th> Name </th>
+    <th> Sample </th>
+    <th> Notes </th>
+    <th> Commands </th>
+</tr>
+<tr>
+    <th> origin </th>
+    <td>
+        <audio controls="controls">
+            <source src="origin/noisy_speech.wav" type="audio/wav">      
+        </audio>
+    </td>
+    <td>None</td>
+    <td>None</td>
+</tr>
+<tr>
+    <th> sofalizer output </th>
+    <td>
+        <audio controls="controls">
+            <source src="sofalizer/sofa_voice.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> 1 channel to 2 channels </td>
+    <td>./ffmpeg -i ~/audio_source/noisy_speech.wav -filter_complex "sofalizer=sofa=temp/hrtf c_nh877.sofa:type=freq:radius=1" sofa_voice.wav</td>
+</tr>
+<tr>
+    <th> channels difference </th>
+    <td>
+        <audio controls="controls">
+            <source src="sofalizer/sofa_minus.wav" type="audio/wav">
+        </audio>
+    </td>
+    <td> 2 channels are not the same </td>
+    <td>ffmpeg -i sofa_voice.wav -af "pan=mono|c0&lt;c0-c1" sofa_minus.wav</td>
+</tr>
+</table>
+</div>
+
+
 <!-- superequalizer -->
 <div id="section">
 <h3> superequalizer </h3>
