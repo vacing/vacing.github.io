@@ -1,0 +1,147 @@
+<html>
+<style>
+.one {
+    height:500px;
+    width:500px;
+    bolder:white;
+    background-color:black;
+}
+.two {
+    height:400px;
+    width:400px;
+    background-color: white;
+    position: relative;
+}
+</style>
+
+<body>
+    <h1>颜色转换测试</h1>
+
+    <p>
+        RGB : 
+        <input type="number" value=0 id="color_r" class="textClass" name="color_rgb">
+        <input type="number" value=0 id="color_g" class="textClass" name="color_rgb">
+        <input type="number" value=0 id="color_b" class="textClass" name="color_rgb">
+        <button type="button" id="rgb2yuvj" onclick="ConvertColorRGB2YUV(this)">RGB -> YUVJ</button>
+        <button type="button" id="rgb2yuv" onclick="ConvertColorRGB2YUV(this)">RGB -> YUV</button>
+        
+        <label for="fname" id="color_rgb_label"> none </label><br>
+        </p>
+    <p>
+        YUVj: 
+        <input type="number" value=0 id="color_y" class="textClass" name="color_yuv">
+        <input type="number" value=0 id="color_u" class="textClass" name="color_yuv">
+        <input type="number" value=0 id="color_v" class="textClass" name="color_yuv">
+        <button type="button" id="yuvj2rgb" onclick="ConvertColorYUV(this)">YUVJ -> RGB</button>
+        <button type="button" id="yuv2rgb"  onclick="ConvertColorYUV(this)">YUV -> RGB</button>
+        
+        <label for="fname" id="color_yuv_label"> none </label><br>
+    </p>
+
+
+    <div class="one">
+        <div class="two" id="show_res" style="top:50;left:50">
+            结果显示区域
+        </div>
+    </div>
+
+</body>
+
+
+
+<script defer>
+
+// full range
+function Yuvj2Rgb(y, u, v) {
+    y = parseInt(y);
+    u = parseInt(u);
+    v = parseInt(v);
+    r = clamp(Math.floor(y+1.4075*(v-128)), 0, 255);
+    g = clamp(Math.floor(y-0.3455*(u-128)-(0.7169*(v-128))), 0, 255);
+    b = clamp(Math.floor(y+1.7790*(u-128)), 0, 255);
+    return([r, g, b]);
+}
+
+function Rgb2Yuvj(r, g, b) {
+    r = parseInt(r);
+    g = parseInt(g);
+    b = parseInt(b);
+    y = clamp(Math.floor(r*0.299   + g*0.587  + b*0.114),        0, 255);
+    u = clamp(Math.floor(r*-0.169  + g*-0.331 + g*0.5)   + 128,  0, 255);
+    v = clamp(Math.floor(r*0.5     + g*-0.419 + g*-0.081) + 128,  0, 255);
+    return([y, u, v]);
+}
+
+// video range
+function Rgb2Yuv(r, g, b) {
+    r = parseInt(r);
+    g = parseInt(g);
+    b = parseInt(b);
+    y = clamp(Math.floor(r*0.257   + g*0.504  + b*0.098) + 16,       0, 255);
+    u = clamp(Math.floor(r*-0.148  + g*-0.291 + g*0.439) + 128,      0, 255);
+    v = clamp(Math.floor(r*0.4339     + g*-0.368 + g*-0.071) + 128,  0, 255);
+    return([y, u, v]);
+}
+
+function Yuv2Rgb(y, u, v) {
+    y = parseInt(y);
+    u = parseInt(u);
+    v = parseInt(v);
+    r = clamp(Math.floor((y-16)*1.164 + (u-128)*0      + (v-128)*1.596),   0, 255);
+    g = clamp(Math.floor((y-16)*1.164 + (u-128)*-0.392 + (v-128)*-0.813),  0, 255);
+    b = clamp(Math.floor((y-16)*1.164 + (u-128)*2.017  + (v-128)*0),       0, 255);
+    return([r, g, b]);
+}
+
+function clamp(n,low,high) {
+    if(n<low)
+        return(low);
+    if(n>high)
+        return(high);
+    return n;
+}
+
+function Rgb2Color(r, g, b) {
+    //随机颜色返回的是一个0.5到1 的两位小数;如果生成的0-1就直接是const a =Math.random()
+    const color = `rgb(${r},${g},${b})`
+    return color
+}
+
+function ConvertColorRGB2YUV(elem) {
+    let color_r = document.getElementById('color_r').value
+    let color_g = document.getElementById('color_g').value
+    let color_b = document.getElementById('color_b').value
+    
+    let show_res = document.getElementById('show_res')
+    let converter = Rgb2Yuvj
+    if (elem.id == 'rgb2yuv')
+        converter = Rgb2Yuv
+    let [y, u, v] = converter(color_r, color_g, color_b)
+    document.getElementById('color_y').value = y
+    document.getElementById('color_u').value = u
+    document.getElementById('color_v').value = v
+    show_res.style.backgroundColor = Rgb2Color(color_r, color_g, color_b)
+    document.getElementById('color_rgb_label').innerHTML = elem.outerText
+}
+
+function ConvertColorYUV(elem) {
+    let color_y = document.getElementById('color_y').value
+    let color_u = document.getElementById('color_u').value
+    let color_v = document.getElementById('color_v').value
+    
+    let show_res = document.getElementById('show_res')
+    let converter = Yuvj2Rgb
+    if (elem.id == 'yuv2rgb')
+        converter = Yuv2Rgb
+    let [r, g, b] = converter(color_y, color_u, color_v)
+    document.getElementById('color_r').value = r
+    document.getElementById('color_g').value = g
+    document.getElementById('color_b').value = b
+    show_res.style.backgroundColor = Rgb2Color(r, g, b)
+    document.getElementById('color_yuv_label').innerHTML = elem.outerText
+}
+</script>
+</html>
+
+
+
