@@ -79,7 +79,7 @@ function Rgb2Yuv(r, g, b) {
     b = parseInt(b);
     y = clamp(Math.floor(r*0.257   + g*0.504  + b*0.098) + 16,       0, 255);
     u = clamp(Math.floor(r*-0.148  + g*-0.291 + g*0.439) + 128,      0, 255);
-    v = clamp(Math.floor(r*0.4339     + g*-0.368 + g*-0.071) + 128,  0, 255);
+    v = clamp(Math.floor(r*0.439     + g*-0.368 + g*-0.071) + 128,  0, 255);
     return([y, u, v]);
 }
 
