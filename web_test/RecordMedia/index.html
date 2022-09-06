@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MediaRecord</title>
+    <link rel="icon" size="48x48" href="vac_48x48.png">
+</head>
+<body>
+    <h1>Vacing's local media record</h1>
+    <div>
+        <label>Audio Input Devices:</label>
+        <select id="audioInputDevices"></select>
+    </div>
+    <div>
+        <label>Audio Output Devices:</label>
+        <select id="audioOutputDevices"></select>
+    </div>
+    <div>
+        <label>Video Input Devices:</label>
+        <select id="videoInputDevices"></select>
+    </div>
+    <div>
+        <video controls autoplay muted id="player" width="400" height="300">
+        </video>
+    </div>
+</body>
+<script src="app.js"></script>
+</html>
