@@ -5,8 +5,6 @@ const audioOutSelectElm = document.querySelector("#audioOutputDevices");
 const videoInSelectElm = document.querySelector("#videoInputDevices");
 var devicesInfosCache = []
 
-navigator.mediaDevices.getUserMedia({audio: true, video: true})
-navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
 function gotDevices(deviceInfos) {
     devicesInfosCache = deviceInfos;
     for (ind in deviceInfos) {
@@ -61,3 +59,5 @@ function gotStream(stream) {
 audioInSelectElm.onchange = start;
 videoInSelectElm.onchange = start;
 start();
+// call getUserMedia() before get device list
+navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
