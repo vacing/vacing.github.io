@@ -11,17 +11,20 @@ function gotDevices(deviceInfos) {
         const device = deviceInfos[ind];
         const option = document.createElement("option");
         option.value = ind;
-        option.text = device.label;
         switch (device.kind) {
             case "audioinput": {
+                option.text = device.label || `microphone ${audioInSelectElm.length + 1}`;
                 audioInSelectElm.appendChild(option);
                 break;
             }
             case "audiooutput": {
+                option.text = device.label || `speaker ${audioOutSelectElm.length + 1}`;
                 audioOutSelectElm.appendChild(option);
+                audioOutSelectElm.value = option.value;
                 break;
             }
             case "videoinput": {
+                option.text = device.label || `camera ${videoInSelectElm.length + 1}`;
                 videoInSelectElm.appendChild(option);
                 break;
             }
@@ -36,19 +39,23 @@ function handleError(error) {
 }
 
 function start() {
-    console.log(devicesInfosCache)
+    console.log(devicesInfosCache);
     const audioInInd = audioInSelectElm.value;
     const videoInInd = videoInSelectElm.value;
-    let constraints = {
-            audio: true,
-            video: true
-    };
+    let constraints = { audio: {deviceId: undefined}, video: {deviceId: undefined} };
     if (devicesInfosCache.length > 0) {
-        constraints = {
-            audio: {deviceId: devicesInfosCache[audioInInd].deviceId},
-            video: {deviceId: devicesInfosCache[videoInInd].deviceId}
-        };
+        if (audioInInd) {
+            constraints.audio.deviceId = devicesInfosCache[audioInInd].deviceId;
+        } else {
+            constraints.audio = false;
+        }
+        if (videoInInd) {
+            constraints.video.deviceId = devicesInfosCache[videoInInd].deviceId;
+        } else {
+            constraints.video = false;
+        }
     }
+    console.log(constraints)
     navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError);
 }
 
@@ -59,5 +66,4 @@ function gotStream(stream) {
 audioInSelectElm.onchange = start;
 videoInSelectElm.onchange = start;
 start();
-// call getUserMedia() before get device list
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
