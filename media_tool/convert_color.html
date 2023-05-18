@@ -59,9 +59,9 @@
 
 
     <p>
-    <button type="button" id="bg_black"  style="background:#000000;color:white" onclick="ResetBg(this)">背景1：(RGB: 0, 0, 0)</button>
+    <button type="button" id="bg_black"  style="background:#000000;color:white" onclick="ResetBg(this)">背景1</button>
     <span class="separator_v"></span>
-    <button type="button" id="bg_ornage" style="background:#C86464;color:white" onclick="ResetBg(this)">背景2：(RGB: 200, 100, 100)</button>
+    <button type="button" id="bg_ornage" style="background:#C86464;color:white" onclick="ResetBg(this)">背景2</button>
     <span class="separator_v"></span>
     <button type="button" id="bg_rgb" onclick="ResetBg(this)">背景使用当前RGB值</button>
     </p>
@@ -170,7 +170,7 @@ function ConvertColorRGB2YUV(elem) {
     document.querySelector('#color_rgb_label').innerHTML = elem.outerText
     document.querySelector('#color_yuv_label').innerHTML = '<- result'
 
-    new_line = "convert " + elem.id + ": (" + (color_r) + "," + (color_g) + "," + (color_b) +
+    new_line = "convert [[" + elem.innerText + "]]: (" + (color_r) + "," + (color_g) + "," + (color_b) +
                                    ") -> (" + (y) + "," + (u) + "," + (v) + ")\n"
     document.querySelector('#history_content').innerText = LogFormat(new_line) + document.querySelector('#history_content').innerText
 }
@@ -192,7 +192,7 @@ function ConvertColorYUV2RGB(elem) {
     document.querySelector('#color_rgb_label').innerHTML = '<- result'
     document.querySelector('#color_yuv_label').innerHTML = elem.outerText
 
-    new_line = "convert " + elem.id + ": (" + (color_y) + "," + (color_u) + "," + (color_v) +
+    new_line = "convert [[" + elem.innerText + "]]: (" + (color_y) + "," + (color_u) + "," + (color_v) +
                                    ") -> (" + (r) + "," + (g) + "," + (b) + ")\n"
     document.querySelector('#history_content').innerText = LogFormat(new_line) + document.querySelector('#history_content').innerText
 }
@@ -220,7 +220,7 @@ function ResetBg(elem) {
     let res_bg = document.querySelector('#res1_bg')
     res_bg.style.backgroundColor = Rgb2Color(color_r, color_g, color_b)
 
-    new_line = "reset " + elem.id + ": (" + (color_r) + "," + (color_g) + "," + (color_b) + ")\n"
+    new_line = "reset [[" + elem.innerText + "]]: (" + (color_r) + "," + (color_g) + "," + (color_b) + ")\n"
     document.querySelector('#history_content').innerText = LogFormat(new_line) + document.querySelector('#history_content').innerText
     
     document.getElementById("rgb2yuv").click();
