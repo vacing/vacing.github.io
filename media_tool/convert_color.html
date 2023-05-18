@@ -14,15 +14,28 @@
     color: white;
     position: relative;
 }
-.separator {
+
+.history {
+    height:1000px;
+    background-color: #F0F0F0;
+    color: black;
+}
+.separator_v {
   border-left: 1px solid black;
-  height: 20px;
+  width: 20px;
   margin: 0 10px;
+}
+.separator_h {
+  border-bottom: 10px solid black;
+  height: 20px;
+  width: 600px;
+  margin: 0 10px 10px 10px;
 }
 </style>
 
 <body>
     <h1>颜色转换测试 1</h1>
+    <div>
     <p>
         RGB : 
         <input type="number" value=0 id="color_r" class="textClass" name="color_rgb">
@@ -47,13 +60,19 @@
 
     <p>
     <button type="button" id="bg_black"  style="background:#000000;color:white" onclick="ResetBg(this)">背景1：(RGB: 0, 0, 0)</button>
-    <span class="separator"></span>
+    <span class="separator_v"></span>
     <button type="button" id="bg_ornage" style="background:#C86464;color:white" onclick="ResetBg(this)">背景2：(RGB: 200, 100, 100)</button>
     </p>
     <div class="res1_bg" id="res1_bg">
         <div class="res1_fg" id="res1_fg" style="top:50;left:50">
             结果显示区域1:
         </div>
+    </div>
+    </div>
+    <span class="separator_h"></span>
+    <div class="history" id="history">
+        操作历史（顶部为最新记录）：
+        <p id=history_content></p>
     </div>
 </body>
 
@@ -76,7 +95,7 @@ function Rgb2Yuvj(r, g, b) {
     g = parseInt(g);
     b = parseInt(b);
     y = clamp(Math.floor(r*0.299   + g*0.587  + b*0.114  + 0.5),        0, 255);
-    u = clamp(Math.floor(r*-0.169  + g*-0.331 + g*0.5    + 0.5)   + 128,  0, 255);
+    u = clamp(Math.floor(r*-0.169  + g*-0.331 + g*0.5    + 0.5) + 128,  0, 255);
     v = clamp(Math.floor(r*0.5     + g*-0.419 + g*-0.081 + 0.5) + 128,  0, 255);
     return([y, u, v]);
 }
@@ -86,9 +105,9 @@ function Yuv2Rgb(y, u, v) {
     y = parseInt(y);
     u = parseInt(u);
     v = parseInt(v);
-    r = clamp(Math.floor((y-16)*1.164 + (u-128)*0      + (v-128)*1.596  + 0.5),   0, 255);
+    r = clamp(Math.floor((y-16)*1.164 + (u-128)*0      + (v-128)*1.596  + 0.5),  0, 255);
     g = clamp(Math.floor((y-16)*1.164 + (u-128)*-0.392 + (v-128)*-0.813 + 0.5),  0, 255);
-    b = clamp(Math.floor((y-16)*1.164 + (u-128)*2.017  + (v-128)*0      + 0.5),       0, 255);
+    b = clamp(Math.floor((y-16)*1.164 + (u-128)*2.017  + (v-128)*0      + 0.5),  0, 255);
     return([r, g, b]);
 }
 
@@ -96,9 +115,9 @@ function Rgb2Yuv(r, g, b) {
     r = parseInt(r);
     g = parseInt(g);
     b = parseInt(b);
-    y = clamp(Math.floor(r*0.257   + g*0.504  + b*0.098 + 0.5) + 16,       0, 255);
-    u = clamp(Math.floor(r*-0.148  + g*-0.291 + g*0.439 + 0.5) + 128,      0, 255);
-    v = clamp(Math.floor(r*0.439   + g*-0.368 + g*-0.071 + 0.5) + 128,  0, 255);
+    y = clamp(Math.floor(r*0.257   + g*0.504  + b*0.098 + 0.5)  + 16,  0, 255);
+    u = clamp(Math.floor(r*-0.148  + g*-0.291 + g*0.439 + 0.5)  + 128, 0, 255);
+    v = clamp(Math.floor(r*0.439   + g*-0.368 + g*-0.071 + 0.5) + 128, 0, 255);
     return([y, u, v]);
 }
 
@@ -115,6 +134,19 @@ function Rgb2Color(r, g, b) {
     //随机颜色返回的是一个0.5到1 的两位小数;如果生成的0-1就直接是const a =Math.random()
     const color = `rgb(${r},${g},${b})`
     return color
+}
+
+function LogFormat(str) {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return "[" + formattedDate + "]" + str
 }
 
 function ConvertColorRGB2YUV(elem) {
@@ -134,6 +166,10 @@ function ConvertColorRGB2YUV(elem) {
     show_res.style.backgroundColor = Rgb2Color(color_r, color_g, color_b)
     document.querySelector('#color_rgb_label').innerHTML = elem.outerText
     document.querySelector('#color_yuv_label').innerHTML = '<- result'
+
+    new_line = "convert " + elem.id + ": (" + (color_r) + "," + (color_g) + "," + (color_b) +
+                                   ") -> (" + (y) + "," + (u) + "," + (v) + ")\n"
+    document.querySelector('#history_content').innerText = LogFormat(new_line) + document.querySelector('#history_content').innerText
 }
 
 function ConvertColorYUV(elem) {
@@ -153,6 +189,10 @@ function ConvertColorYUV(elem) {
     show_res.style.backgroundColor = Rgb2Color(r, g, b)
     document.querySelector('#color_rgb_label').innerHTML = '<- result'
     document.querySelector('#color_yuv_label').innerHTML = elem.outerText
+
+    new_line = "convert " + elem.id + ": (" + (color_y) + "," + (color_u) + "," + (color_v) +
+                                   ") -> (" + (r) + "," + (g) + "," + (b) + ")\n"
+    document.querySelector('#history_content').innerText = LogFormat(new_line) + document.querySelector('#history_content').innerText
 }
 
 function ResetBg(elem) {
@@ -173,6 +213,10 @@ function ResetBg(elem) {
     res_fg.style.backgroundColor = Rgb2Color(color_r, color_g, color_b)
     let res_bg = document.querySelector('#res1_bg')
     res_bg.style.backgroundColor = Rgb2Color(color_r, color_g, color_b)
+    document.getElementById("rgb2yuv").click();
+    
+    new_line = "reset " + elem.id + ": (" + (color_r) + "," + (color_g) + "," + (color_b) + ")\n"
+    document.querySelector('#history_content').innerText = LogFormat(new_line) + document.querySelector('#history_content').innerText
 }
 </script>
 </html>
