@@ -1,22 +1,28 @@
 <html>
 <style>
-.one {
+.res1_bg {
     height:500px;
     width:500px;
     bolder:white;
     background-color:black;
+    color: white;
 }
-.two {
+.res1_fg {
     height:400px;
     width:400px;
-    background-color: white;
+    background-color: black;
+    color: white;
     position: relative;
+}
+.separator {
+  border-left: 1px solid black;
+  height: 20px;
+  margin: 0 10px;
 }
 </style>
 
 <body>
-    <h1>颜色转换测试</h1>
-
+    <h1>颜色转换测试 1</h1>
     <p>
         RGB : 
         <input type="number" value=0 id="color_r" class="textClass" name="color_rgb">
@@ -25,13 +31,13 @@
         <button type="button" id="rgb2yuvj" onclick="ConvertColorRGB2YUV(this)">RGB -> YUVJ</button>
         <button type="button" id="rgb2yuv" onclick="ConvertColorRGB2YUV(this)">RGB -> YUV</button>
         
-        <label for="fname" id="color_rgb_label"> none </label><br>
+        <label for="fname" id="color_rgb_label"> RGB -> YUVJ </label><br>
         </p>
     <p>
         YUVj: 
         <input type="number" value=0 id="color_y" class="textClass" name="color_yuv">
-        <input type="number" value=0 id="color_u" class="textClass" name="color_yuv">
-        <input type="number" value=0 id="color_v" class="textClass" name="color_yuv">
+        <input type="number" value=128 id="color_u" class="textClass" name="color_yuv">
+        <input type="number" value=128 id="color_v" class="textClass" name="color_yuv">
         <button type="button" id="yuvj2rgb" onclick="ConvertColorYUV(this)">YUVJ -> RGB</button>
         <button type="button" id="yuv2rgb"  onclick="ConvertColorYUV(this)">YUV -> RGB</button>
         
@@ -39,14 +45,17 @@
     </p>
 
 
-    <div class="one">
-        <div class="two" id="show_res" style="top:50;left:50">
-            结果显示区域
+    <p>
+    <button type="button" id="bg_black"  style="background:#000000;color:white" onclick="ResetBg(this)">背景1：(RGB: 0, 0, 0)</button>
+    <span class="separator"></span>
+    <button type="button" id="bg_ornage" style="background:#C86464;color:white" onclick="ResetBg(this)">背景2：(RGB: 200, 100, 100)</button>
+    </p>
+    <div class="res1_bg" id="res1_bg">
+        <div class="res1_fg" id="res1_fg" style="top:50;left:50">
+            结果显示区域1:
         </div>
     </div>
-
 </body>
-
 
 
 <script defer>
@@ -109,37 +118,61 @@ function Rgb2Color(r, g, b) {
 }
 
 function ConvertColorRGB2YUV(elem) {
-    let color_r = document.getElementById('color_r').value
-    let color_g = document.getElementById('color_g').value
-    let color_b = document.getElementById('color_b').value
+    let color_r = document.querySelector('#color_r').value
+    let color_g = document.querySelector('#color_g').value
+    let color_b = document.querySelector('#color_b').value
     
-    let show_res = document.getElementById('show_res')
+    let show_res = document.querySelector('#res1_fg')
+    let show_bg = document.querySelector('#res1_bg')
     let converter = Rgb2Yuvj
     if (elem.id == 'rgb2yuv')
         converter = Rgb2Yuv
     let [y, u, v] = converter(color_r, color_g, color_b)
-    document.getElementById('color_y').value = y
-    document.getElementById('color_u').value = u
-    document.getElementById('color_v').value = v
+    document.querySelector('#color_y').value = y
+    document.querySelector('#color_u').value = u
+    document.querySelector('#color_v').value = v
     show_res.style.backgroundColor = Rgb2Color(color_r, color_g, color_b)
-    document.getElementById('color_rgb_label').innerHTML = elem.outerText
+    document.querySelector('#color_rgb_label').innerHTML = elem.outerText
+    document.querySelector('#color_yuv_label').innerHTML = '<- result'
 }
 
 function ConvertColorYUV(elem) {
-    let color_y = document.getElementById('color_y').value
-    let color_u = document.getElementById('color_u').value
-    let color_v = document.getElementById('color_v').value
+    let color_y = document.querySelector('#color_y').value
+    let color_u = document.querySelector('#color_u').value
+    let color_v = document.querySelector('#color_v').value
     
-    let show_res = document.getElementById('show_res')
+    let show_res = document.querySelector('#res1_fg')
+    let show_bg = document.querySelector('#res1_bg')
     let converter = Yuvj2Rgb
     if (elem.id == 'yuv2rgb')
         converter = Yuv2Rgb
     let [r, g, b] = converter(color_y, color_u, color_v)
-    document.getElementById('color_r').value = r
-    document.getElementById('color_g').value = g
-    document.getElementById('color_b').value = b
+    document.querySelector('#color_r').value = r
+    document.querySelector('#color_g').value = g
+    document.querySelector('#color_b').value = b
     show_res.style.backgroundColor = Rgb2Color(r, g, b)
-    document.getElementById('color_yuv_label').innerHTML = elem.outerText
+    document.querySelector('#color_rgb_label').innerHTML = '<- result'
+    document.querySelector('#color_yuv_label').innerHTML = elem.outerText
+}
+
+function ResetBg(elem) {
+    if (elem.id == 'bg_black') {
+        document.querySelector('#color_r').value = 0
+        document.querySelector('#color_g').value = 0
+        document.querySelector('#color_b').value = 0
+    }else {
+        document.querySelector('#color_r').value = 200
+        document.querySelector('#color_g').value = 100
+        document.querySelector('#color_b').value = 100
+    }
+
+    let color_r = document.querySelector('#color_r').value
+    let color_g = document.querySelector('#color_g').value
+    let color_b = document.querySelector('#color_b').value
+    let res_fg = document.querySelector('#res1_fg')
+    res_fg.style.backgroundColor = Rgb2Color(color_r, color_g, color_b)
+    let res_bg = document.querySelector('#res1_bg')
+    res_bg.style.backgroundColor = Rgb2Color(color_r, color_g, color_b)
 }
 </script>
 </html>
