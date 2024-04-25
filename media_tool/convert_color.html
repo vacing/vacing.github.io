@@ -41,18 +41,20 @@
         <input type="number" value=0 id="color_r" class="textClass" name="color_rgb">
         <input type="number" value=0 id="color_g" class="textClass" name="color_rgb">
         <input type="number" value=0 id="color_b" class="textClass" name="color_rgb">
-        <button type="button" id="rgb2yuvj" onclick="ConvertColorRGB2YUV(this)">RGB -> YUVJ</button>
-        <button type="button" id="rgb2yuv" onclick="ConvertColorRGB2YUV(this)">RGB -> YUV</button>
+        <button type="button" id="rgb2yuvj" onclick="ConvertColorRGB2YUV(this)">RGB->YUVJ</button>
+        <button type="button" id="rgb2yuv601" onclick="ConvertColorRGB2YUV(this)">RGB->YUV601</button>
+        <button type="button" id="rgb2yuv709" onclick="ConvertColorRGB2YUV(this)">RGB->YUV709</button>
         
-        <label for="fname" id="color_rgb_label"> RGB -> YUVJ </label><br>
+        <label for="fname" id="color_rgb_label"> none </label><br>
         </p>
     <p>
         YUV: 
-        <input type="number" value=0 id="color_y" class="textClass" name="color_yuv">
-        <input type="number" value=128 id="color_u" class="textClass" name="color_yuv">
-        <input type="number" value=128 id="color_v" class="textClass" name="color_yuv">
-        <button type="button" id="yuvj2rgb" onclick="ConvertColorYUV2RGB(this)">YUVJ -> RGB</button>
-        <button type="button" id="yuv2rgb"  onclick="ConvertColorYUV2RGB(this)">YUV -> RGB</button>
+        <input type="number" value=88 id="color_y" class="textClass" name="color_yuv">
+        <input type="number" value=208 id="color_u" class="textClass" name="color_yuv">
+        <input type="number" value=152 id="color_v" class="textClass" name="color_yuv">
+        <button type="button" id="yuvj2rgb" onclick="ConvertColorYUV2RGB(this)">YUVJ->RGB</button>
+        <button type="button" id="yuv2rgb601"  onclick="ConvertColorYUV2RGB(this)">YUV->RGB601</button>
+        <button type="button" id="yuv2rgb709"  onclick="ConvertColorYUV2RGB(this)">YUV->RGB709</button>
         
         <label for="fname" id="color_yuv_label"> none </label><br>
     </p>
@@ -83,48 +85,78 @@
 
 // full range
 function Yuvj2Rgb(y, u, v) {
+    console.log(arguments.callee.name, ":", y, u, v)
     y = clamp(parseInt(y), 0, 255);
     u = clamp(parseInt(u), 0, 255);
     v = clamp(parseInt(v), 0, 255);
     r = clamp(Math.floor(y+1.4075                *(v-128) + 0.5), 0, 255);
     g = clamp(Math.floor(y-0.3455*(u-128)-0.7169 *(v-128) + 0.5), 0, 255);
     b = clamp(Math.floor(y+1.7790*(u-128)                 + 0.5), 0, 255);
+    console.log(arguments.callee.name, ":", r, g, b)
     return([r, g, b]);
 }
 
 function Rgb2Yuvj(r, g, b) {
+    console.log(arguments.callee.name, ":", r, g, b)
     r = clamp(parseInt(r), 0, 255);
     g = clamp(parseInt(g), 0, 255);
     b = clamp(parseInt(b), 0, 255);
     y = clamp(Math.floor(r*0.299   + g*0.587  + b*0.114  + 0.5),        0, 255);
     u = clamp(Math.floor(r*-0.169  + g*-0.331 + b*0.5    + 0.5) + 128,  0, 255);
     v = clamp(Math.floor(r*0.5     + g*-0.419 + b*-0.081 + 0.5) + 128,  0, 255);
+    console.log(arguments.callee.name, ":", y, u, v)
     return([y, u, v]);
 }
 
-// video range
-function Yuv2Rgb(y, u, v) {
+// 601 video range
+function Yuv2Rgb601(y, u, v) {
+    console.log(arguments.callee.name, ":", y, u, v)
     y = clamp(parseInt(y), 0, 255);
-    u = clamp(parseInt(u), 0, 255);
-    v = clamp(parseInt(v), 0, 255);
+    u = clamp(parseInt(u), 0, 240);
+    v = clamp(parseInt(v), 0, 240);
     r = clamp(Math.floor((y-16)*1.164 + (u-128)*0      + (v-128)*1.596  + 0.5),  0, 255);
     g = clamp(Math.floor((y-16)*1.164 + (u-128)*-0.392 + (v-128)*-0.813 + 0.5),  0, 255);
     b = clamp(Math.floor((y-16)*1.164 + (u-128)*2.017  + (v-128)*0      + 0.5),  0, 255);
+    console.log(arguments.callee.name, ":", r, g, b)
     return([r, g, b]);
 }
 
-function Rgb2Yuv(r, g, b) {
-    console.log(r, g, b)
+function Rgb2Yuv601(r, g, b) {
+    console.log(arguments.callee.name, ":", r, g, b)
     r = clamp(parseInt(r), 0, 255);
     g = clamp(parseInt(g), 0, 255);
     b = clamp(parseInt(b), 0, 255);
     y = clamp(Math.floor(r*0.257   + g*0.504  + b*0.098  + 0.5) + 16,  0, 255);
     u = clamp(Math.floor(r*-0.148  + g*-0.291 + b*0.439  + 0.5) + 128, 0, 255);
     v = clamp(Math.floor(r*0.439   + g*-0.368 + b*-0.071 + 0.5) + 128, 0, 255);
-    console.log(y, u, v)
+    console.log(arguments.callee.name, ":", y, u, v)
     return([y, u, v]);
 }
 
+// 709 video range
+function Yuv2Rgb709(y, u, v) {
+    console.log(arguments.callee.name, ":", y, u, v)
+    y = clamp(parseInt(y), 0, 255);
+    u = clamp(parseInt(u), 0, 240);
+    v = clamp(parseInt(v), 0, 240);
+    r = clamp(Math.floor((y-16)*1.164 + (u-128)*0      + (v-128)*1.793  + 0.5),  0, 255);
+    g = clamp(Math.floor((y-16)*1.164 + (u-128)*-0.213 + (v-128)*-0.533 + 0.5),  0, 255);
+    b = clamp(Math.floor((y-16)*1.164 + (u-128)*2.112  + (v-128)*0      + 0.5),  0, 255);
+    console.log(arguments.callee.name, ":", r, g, b)
+    return([r, g, b]);
+}
+
+function Rgb2Yuv709(r, g, b) {
+    console.log(arguments.callee.name, ":", r, g, b)
+    r = clamp(parseInt(r), 0, 255);
+    g = clamp(parseInt(g), 0, 255);
+    b = clamp(parseInt(b), 0, 255);
+    y = clamp(Math.floor(r*0.183   + g*0.614  + b*0.062  + 0.5) + 16,  0, 255);
+    u = clamp(Math.floor(r*-0.101  + g*-0.339 + b*0.439  + 0.5) + 128, 0, 255);
+    v = clamp(Math.floor(r*0.439   + g*-0.399 + b*-0.040 + 0.5) + 128, 0, 255);
+    console.log(arguments.callee.name, ":", y, u, v)
+    return([y, u, v]);
+}
 
 function clamp(n,low,high) {
     if(n<low)
@@ -160,8 +192,10 @@ function ConvertColorRGB2YUV(elem) {
     
     let show_res = document.querySelector('#res1_fg')
     let converter = Rgb2Yuvj
-    if (elem.id == 'rgb2yuv')
-        converter = Rgb2Yuv
+    if (elem.id == 'rgb2yuv601')
+        converter = Rgb2Yuv601
+    else if (elem.id == 'rgb2yuv709')
+        converter = Rgb2Yuv709
     let [y, u, v] = converter(color_r, color_g, color_b)
     document.querySelector('#color_y').value = y
     document.querySelector('#color_u').value = u
@@ -182,8 +216,10 @@ function ConvertColorYUV2RGB(elem) {
     
     let show_res = document.querySelector('#res1_fg')
     let converter = Yuvj2Rgb
-    if (elem.id == 'yuv2rgb')
-        converter = Yuv2Rgb
+    if (elem.id == 'yuv2rgb601')
+        converter = Yuv2Rgb601
+    else if (elem.id == 'yuv2rgb709')
+        converter = Yuv2Rgb709
     let [r, g, b] = converter(color_y, color_u, color_v)
     document.querySelector('#color_r').value = r
     document.querySelector('#color_g').value = g
